@@ -20,7 +20,6 @@ operand = deque() # 피연산자
 operator = deque() # 연산자
 
 num = '0'
-flag = 0
 for x in exp:
     if x.isdigit():
         if num == '0' and x == '0':
