@@ -7,24 +7,29 @@
 '''
 import sys
 
+# 부모 루트 노드 탐색
 def find_parent(parent, x):
-    if parent[x] != x:
-        parent[x] = find_parent(parent, parent[x])
+    if parent[x] != x: # 부모가 자기 자신이 아닐 때 
+        parent[x] = find_parent(parent, parent[x]) # 부모 노드 탐색
     return parent[x]
 
+# 두 원소가 속한 집합 합치기 - 연결하기
 def union_parent(parent, a, b):
     a = find_parent(parent, a)
     b = find_parent(parent, b)
 
+    # 작은값이 부모루트가 되도록 지정
     if a < b:
         parent[b] = a
     else:
         parent[a] = b
 
 
+# 노드의 개수와 간선의 개수 입력 받기
 n, m = map(int, sys.stdin.readline().split())
 parent = [0] * n
 
+# 각 노드의 부모를 자기 자신으로 초기화
 for i in range(n):
     parent[i] = i
 
@@ -32,10 +37,11 @@ cycle = 0
 for i in range(m):
     x, y = map(int, sys.stdin.readline().split())
 
+    # 각 회차마다 싸이클 유무 판별
     if find_parent(parent, x) == find_parent(parent, y):
-        cycle = i + 1
+        cycle = i + 1 # 싸이클이 발생한 회차 저장
         break
     else:
         union_parent(parent, x, y)
 
-print(cycle)
+print(cycle) 
